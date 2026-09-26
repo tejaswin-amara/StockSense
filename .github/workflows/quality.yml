@@ -9,19 +9,17 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      security-events: write
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
         with:
-          version: 9
+          version: 11
       - uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: pnpm
       - run: pnpm install --frozen-lockfile
-      - run: pnpm exec biome ci .
-      - run: pnpm exec tsc --noEmit
+      - run: pnpm check
       - run: pnpm test -- --run
-      - run: gitleaks detect --no-banner
-      - run: trivy fs --exit-code 1 --severity CRITICAL,HIGH .
+      - run: pnpm build
+      - run: bash ./validate-docs.sh

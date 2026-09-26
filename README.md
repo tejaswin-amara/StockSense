@@ -1,6 +1,30 @@
-# StockSense Documentation Pack
+# StockSense
 
-StockSense is a modular inventory management system for authenticated inventory managers and warehouse staff. This pack turns the unified engineering specification, PDF brief, and Excalidraw mock-up into implementation-ready project documents.
+StockSense is a modular inventory management system for authenticated inventory managers and warehouse staff. The repository contains the runnable full-stack application scaffold and the implementation documentation pack.
+
+## Run locally
+
+```bash
+pnpm install --frozen-lockfile
+pnpm dev
+```
+
+Useful checks:
+
+```bash
+pnpm check
+pnpm test -- --run
+pnpm build
+bash ./validate-docs.sh
+```
+
+The dashboard supports a read-only guest preview when no user session is present. Sign in to enable protected operation validation.
+
+## Current implementation slice
+
+Implemented: responsive dashboard, KPI cards, operational queue, stock availability, operations list, move history, warehouse settings, tRPC inventory snapshot, protected validation command, Drizzle inventory schema/migration, demo fallback data, and focused inventory/auth tests.
+
+The next production-hardening steps are persistent operation-line writes, full receipt/delivery/transfer/adjustment commands, role-aware authorization policy, migration/seed automation, and cross-browser E2E coverage.
 
 ## Documents
 
@@ -27,3 +51,11 @@ Next.js App Router + TypeScript, pnpm, Biome, Tailwind/shadcn, React Hook Form +
 - Dates are stored in UTC and rendered in the user's configured timezone.
 - Quantities are non-negative integers in the baseline; decimal quantities require a reviewed schema change.
 - The supplied mock-up is the visual reference for dashboard, stock, warehouse/location, operations, and move-history screens.
+
+## Public APIs resource
+
+The `public-apis/public-apis` repository is not a dependency of core inventory logic. If an integration catalog is added later, it must be optional, pinned, reviewed, and MIT-attributed; stock balances and ledger integrity must never depend on arbitrary third-party APIs.
+
+## License
+
+Choose and add the project license before public release. Third-party dependency and resource licenses must be recorded in `docs/resource-inventory.md`.
